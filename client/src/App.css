@@ -7,6 +7,14 @@
   pointer-events: none;
 }
 
+.App-logo-small {
+  display: block;
+  max-width: 215px;
+  max-height: 215px;
+  width: auto;
+  height: auto;
+}
+
 .contentSearch {
   margin: auto;
   width: 50em;
@@ -26,6 +34,13 @@
   margin: auto;
   padding-bottom: 1em;
   width: 50em;
+}
+
+#typeSearchTopBar {
+  padding-top: 4.5em;
+  width: 15em;
+  margin-right: 5em;
+  margin-left: 3em;
 }
 
 #statSearch {
@@ -60,6 +75,42 @@
 #searchButton {
   float: right;
   width: 10em;
+}
+
+#contentSearchTopBar {
+  padding-top: 4.5em;
+  width: 50em;
+}
+
+.textSearchTopBar {
+  width: 50em;
+}
+
+.topBar {
+  margin: auto;
+}
+
+.resultBox {
+  width: 50em;
+  margin: auto;
+}
+
+.statsStack {
+  margin: auto;
+  text-align: center;
+}
+
+.statsPaper {
+  margin: 5px;
+  margin-right: 3em;
+  padding: 5px;
+  /* background-color: #000000;
+  color: #ffff; */
+}
+
+.statsLabel {
+  color: darkgray;
+  font-size: 1pt;
 }
 
 /* 

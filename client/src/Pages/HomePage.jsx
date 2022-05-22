@@ -103,8 +103,9 @@ export default class HomePage extends React.Component {
                                 <Slider
                                     aria-label="Always visible"
                                     label="energy"
-                                    step={50}
+                                    step={1}
                                     marks={this.energyMarks}
+                                    valueLabelDisplay="auto"
                                 />
                             </div>
                             <div className="statBox statBoxRight">
@@ -112,7 +113,8 @@ export default class HomePage extends React.Component {
                                 <Slider
                                     aria-label="Always visible"
                                     label="danceability"
-                                    step={50}
+                                    step={1}
+                                    valueLabelDisplay="auto"
                                     marks={this.danceabilityMarks}
                                 />
                             </div>
