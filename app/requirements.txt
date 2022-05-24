@@ -4,3 +4,5 @@ requests
 elementpath
 flask_mysqldb
 flask-cors
+numpy
+pandas
