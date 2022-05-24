@@ -6,9 +6,12 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SearchIcon from '@mui/icons-material/Search'
+import ResultPage from './ResultPage';
+import { withRouter } from "react-router"
+import PropTypes from "prop-types"
 
 
-export default class HomePage extends React.Component {
+class HomePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -25,6 +28,11 @@ export default class HomePage extends React.Component {
         this.danceabilityMarks = [{ value: 0, label: 'Low', }, { value: 50, label: 'Medium', }, { value: 100, label: 'High', }];
     }
 
+    // static propTypes = {
+    //     location: PropTypes.object.isRequired,
+    //     history: PropTypes.object.isRequired
+    // }
+
     async componentDidMount() {
         let data = (await Service.getAll()).data.map((option) => {
             const firstLetter = option.title[0].toUpperCase();
@@ -39,6 +47,15 @@ export default class HomePage extends React.Component {
         })
 
     }
+
+    async sendData() {
+        // const { history, location } = this.props
+        console.log(this.state)
+        let data = await Service.research(this.state.bpm, this.state.danceability, this.state.energy, this.state.lyricsSearch);
+        console.log(data)
+        this.props.navigate("/result", { state: { data: data, lyrics: this.state.lyricsSearch, isTitleSearch: this.state.isTitleSearch } });
+    }
+
     render() {
         const { isLoaded, songs, isTitleSearch, bpm } = this.state;
         if (!isLoaded) {
@@ -47,9 +64,13 @@ export default class HomePage extends React.Component {
         }
         const handleBlur = () => {
             if (this.bpm < 0) {
-                this.bpm = 0;
+                this.setState({
+                    bpm: 0
+                })
             } else if (this.bpm > 100) {
-                this.bp = 100;
+                this.setState({
+                    bpm: 0
+                })
             }
         };
         return (
@@ -83,7 +104,7 @@ export default class HomePage extends React.Component {
                         <div>
                             <TextField
                                 className="contentSearch"
-                                onChange={(event, value) => this.setState({ lyricsSearch: value })}
+                                onChange={(event) => this.setState({ lyricsSearch: event.target.value })}
                             >
                             </TextField>
                         </div>
@@ -106,6 +127,9 @@ export default class HomePage extends React.Component {
                                     step={1}
                                     marks={this.energyMarks}
                                     valueLabelDisplay="auto"
+                                    onChange={(event, value) => this.setState({
+                                        energy: value
+                                    })}
                                 />
                             </div>
                             <div className="statBox statBoxRight">
@@ -116,6 +140,9 @@ export default class HomePage extends React.Component {
                                     step={1}
                                     valueLabelDisplay="auto"
                                     marks={this.danceabilityMarks}
+                                    onChange={(event, value) => this.setState({
+                                        danceability: value
+                                    })}
                                 />
                             </div>
                             <div className="bpmStatBox">
@@ -153,12 +180,13 @@ export default class HomePage extends React.Component {
                     </Accordion>
                 </div>
                 <div id="searchButtonLine">
-                    <Button id="searchButton" variant="contained" endIcon={<SearchIcon />}>
+                    <Button id="searchButton" variant="contained" endIcon={<SearchIcon />} onClick={async () => await this.sendData()}>
                         Search
                     </Button>
                 </div>
-            </div>
+            </div >
         );
     }
 }
 
+export default HomePage
