@@ -7,14 +7,16 @@ export default class Service {
         return data;
     }
 
-    static async research(bpm, danceability, energy, lyrics) {
+    static async research(bpm, danceability, energy, isTitleSearch, lyrics, title, artistName) {
         let response = await axios.post(this.hostUri + "research", {
             UI_BPM: bpm,
             UI_DANCE: danceability,
             UI_ENERGY: energy,
-            lyrics: lyrics
+            lyrics: lyrics,
+            title: title,
+            isTitleSearch: isTitleSearch,
+            artistName: artistName
         })
-        console.log(response);
         return response.data
     }
 

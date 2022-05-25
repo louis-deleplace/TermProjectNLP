@@ -148,7 +148,7 @@ def getSong():
     title = request.args.get("title")
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM songs where artist = " +
-                   artist + "AND title = " + title + " LIMIT 1")
+                   artist + " AND title = " + title + " LIMIT 1")
     data = cursor.fetchall()
     cursor.close()
 
@@ -158,16 +158,23 @@ def getSong():
 @app.route('/research', methods=["POST"])
 def research():
     # request.form
-    cursor = mysql.connection.cursor()
     # data = cursor.fetchall()
     data = pandas.read_sql("SELECT * FROM songs", mysql.connection)
     args = request.get_json()
-    print(request, file=sys.stderr)
-    print(args, file=sys.stderr)
     UI_BPM = args["UI_BPM"]
     UI_DANCE = args["UI_DANCE"]
     UI_ENERGY = args["UI_ENERGY"]
     lyrics = args["lyrics"]
+    title = args["title"]
+    artistName = args["artistName"]
+    isTitleSearch = args["isTitleSearch"]
+    if (isTitleSearch):
+        cursor = mysql.connection.cursor()
+        sql = "SELECT lyrics FROM songs where artist = %s AND title = %s"
+        values = (artistName, title)
+        cursor.execute(sql, values)
+        res = cursor.fetchall()
+        lyrics = res[0]["lyrics"]
     COEF_BPM = 2
     COEF_ENERGY = 1
     COEF_DANCE = 1

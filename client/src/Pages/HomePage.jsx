@@ -18,14 +18,16 @@ class HomePage extends React.Component {
             isLoaded: false,
             songs: null,
             bpm: 10,
-            energy: 0,
-            danceability: 0,
+            energy: 1,
+            danceability: 1,
             isTitleSearch: true,
-            lyricsSearch: ""
+            lyricsSearch: "",
+            titleSearch: "",
+            artistName: ""
         }
         this.logo = require("../images/searzic_logo_trans.png");
-        this.energyMarks = [{ value: 0, label: 'Low', }, { value: 50, label: 'Medium', }, { value: 100, label: 'High', }];
-        this.danceabilityMarks = [{ value: 0, label: 'Low', }, { value: 50, label: 'Medium', }, { value: 100, label: 'High', }];
+        this.energyMarks = [{ value: 1, label: 'Low', }, { value: 50, label: 'Medium', }, { value: 100, label: 'High', }];
+        this.danceabilityMarks = [{ value: 1, label: 'Low', }, { value: 50, label: 'Medium', }, { value: 100, label: 'High', }];
     }
 
     // static propTypes = {
@@ -49,11 +51,8 @@ class HomePage extends React.Component {
     }
 
     async sendData() {
-        // const { history, location } = this.props
-        console.log(this.state)
-        let data = await Service.research(this.state.bpm, this.state.danceability, this.state.energy, this.state.lyricsSearch);
-        console.log(data)
-        this.props.navigate("/result", { state: { data: data, lyrics: this.state.lyricsSearch, isTitleSearch: this.state.isTitleSearch } });
+        let data = await Service.research(this.state.bpm, this.state.danceability, this.state.energy, this.state.isTitleSearch, this.state.lyricsSearch, this.state.titleSearch, this.state.artistName);
+        this.props.navigate("/result", { state: { data: data, lyrics: this.state.lyricsSearch, isTitleSearch: this.state.isTitleSearch, artistName: this.state.artistName, title: this.state.titleSearch } });
     }
 
     render() {
@@ -98,6 +97,7 @@ class HomePage extends React.Component {
                         groupBy={(option) => option.firstLetter}
                         getOptionLabel={(option) => option.title + " - [" + option.artist + "]"}
                         options={songs}
+                        onChange={(event, value) => { this.setState({ titleSearch: value.title, artistName: value.artist }) }}
                         renderInput={(params) => <TextField {...params} />}
                     />
                         :
@@ -124,6 +124,7 @@ class HomePage extends React.Component {
                                 <Slider
                                     aria-label="Always visible"
                                     label="energy"
+                                    min={1}
                                     step={1}
                                     marks={this.energyMarks}
                                     valueLabelDisplay="auto"
@@ -138,6 +139,7 @@ class HomePage extends React.Component {
                                     aria-label="Always visible"
                                     label="danceability"
                                     step={1}
+                                    min={1}
                                     valueLabelDisplay="auto"
                                     marks={this.danceabilityMarks}
                                     onChange={(event, value) => this.setState({
