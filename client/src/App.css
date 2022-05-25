@@ -113,6 +113,16 @@
   font-size: 1pt;
 }
 
+.lyrics {
+  margin: auto;
+  padding-top: 3em;
+  width: 50em;
+}
+
+.title {
+  margin-top: 5em;
+}
+
 /* 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
