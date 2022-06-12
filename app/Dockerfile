@@ -15,5 +15,5 @@ RUN pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted
 
 # Run app.py when the container launches
 COPY app.py /app
-COPY Spotify-2000.csv /app
+#COPY Spotify-2000.csv /app
 CMD python app.py
