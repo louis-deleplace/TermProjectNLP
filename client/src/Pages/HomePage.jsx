@@ -56,7 +56,7 @@ class HomePage extends React.Component {
     }
 
     render() {
-        const { isLoaded, songs, isTitleSearch, bpm } = this.state;
+        const { isLoaded, songs, isTitleSearch, bpm, danceability, energy } = this.state;
         if (!isLoaded) {
             return (<CircularProgress />
             )
@@ -97,7 +97,12 @@ class HomePage extends React.Component {
                         groupBy={(option) => option.firstLetter}
                         getOptionLabel={(option) => option.title + " - [" + option.artist + "]"}
                         options={songs}
-                        onChange={(event, value) => { this.setState({ titleSearch: value.title, artistName: value.artist }) }}
+                        onChange={(event, value) => {
+                            this.setState({
+                                titleSearch: value.title, artistName: value.artist, bpm: value.bpm,
+                                energy: value.energy, danceability: value.danceability
+                            })
+                        }}
                         renderInput={(params) => <TextField {...params} />}
                     />
                         :
@@ -123,6 +128,7 @@ class HomePage extends React.Component {
                                 <Typography gutterBottom>Energetic</Typography>
                                 <Slider
                                     aria-label="Always visible"
+                                    value={energy}
                                     label="energy"
                                     min={1}
                                     step={1}
@@ -137,6 +143,7 @@ class HomePage extends React.Component {
                                 <Typography gutterBottom>Danceability</Typography>
                                 <Slider
                                     aria-label="Always visible"
+                                    value={danceability}
                                     label="danceability"
                                     step={1}
                                     min={1}
