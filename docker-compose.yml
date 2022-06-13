@@ -13,10 +13,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - ./db:/docker-entrypoint-initdb.d/:ro
-  client:
-    build: ./client
-    links:
-      - "app:server"
-    ports:
-      - "3000:3000"
+      - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+  # client:
+  #   build: ./client
+  #   links:
+  #     - "app:server"
+  #   ports:
+  #     - "3000:3000"

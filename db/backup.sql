@@ -19,6 +19,9 @@
 -- Table structure for table `songs`
 --
 
+CREATE DATABASE IF NOT EXISTS songs;
+USE songs;
+
 DROP TABLE IF EXISTS `songs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
