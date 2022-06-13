@@ -14,9 +14,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
-  # client:
-  #   build: ./client
-  #   links:
-  #     - "app:server"
-  #   ports:
-  #     - "3000:3000"
+  client:
+    build: ./client
+    links:
+      - "app:server"
+    ports:
+      - "3000:3000"
